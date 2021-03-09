@@ -1,11 +1,11 @@
 # RawQ-Realtime
 ดึงข้อมูลเมมื่อมีการบันทึกลงฐานข้อมูล
-
-.env
-DB_HOST=######
-DB_USER=######
-DB_PASS=######
-DB_NAME=queuedb
-DB_PORT=3306
-
+<br/><br/>
+.env<br/>
+DB_HOST=######<br/>
+DB_USER=######<br/>
+DB_PASS=######<br/>
+DB_NAME=queuedb<br/>
+DB_PORT=3306<br/>
+<br/><br/>
 PORT=5500
