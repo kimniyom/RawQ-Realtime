@@ -39,6 +39,18 @@ io.on('connection', function(socket) {
         io.sockets.emit("callquere-drug", data);
     });
 
+    //เช็คช่องสัญาณว่าว่างไหม
+    socket.on('check-call', function(data) {
+        //console.log(data);
+        io.sockets.emit("check-call", data);
+    });
+
+    //ล้างค่าหน้าจอ
+    socket.on('clear-monitor', function(data) {
+        //console.log(data);
+        io.sockets.emit("clear-monitor", data);
+    });
+
     //###################### Service Mobile ###################//
     //ส่งคิวเรียกล่าสุด
     socket.on('call-lastq', function(data) { //=>data ส่งเป็น Json {'lastq': lastq,'qtype': qtype,'qdate': qdate}
