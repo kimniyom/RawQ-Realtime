@@ -11,6 +11,10 @@ const io = require('socket.io')(http, {
     transports: ['websocket', 'polling'],
 });
 
+app.get('/', (req, res) => {
+    res.send('<h1>WelCome to api rawq</h1>');
+});
+
 io.on('connection', function(socket) {
     console.log("user connected");
 
