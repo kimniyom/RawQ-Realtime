@@ -101,12 +101,10 @@ io.on('connection', function(socket) {
     //###################### Service Mobile ###################//
     //ส่งคิวเรียกล่าสุด
     socket.on('call-lastq', function(data) { //=>data ส่งเป็น Json {'lastq': lastq,'qtype': qtype,'qdate': qdate}
-        console.log(data);
         io.sockets.emit("call-lastq", data);
     });
 
     socket.on('mobile-drug', function(data) {
-        console.log(data);
         io.sockets.emit("mobile-drug", data);
     });
 
@@ -119,6 +117,8 @@ io.on('connection', function(socket) {
         console.log("user disconnect");
         //io.sockets.emit('end call');
     });
+
+    //////////////////// ตู้ Kiosk ระบบคิว /////////////////////////////
 
     //ส่วนของตู้ Kiosk เมื่อกดคิวส่งค่าไปยังจอตามรหัสแผนกที่ส่งมา
     socket.on('monitor-counter', function(data) {
@@ -162,6 +162,8 @@ io.on('connection', function(socket) {
         //console.log(data.cid);
         io.sockets.emit('checksmartcard', data);
     });
+
+
 
 
 });
