@@ -118,38 +118,6 @@ io.on('connection', function(socket) {
         //io.sockets.emit('end call');
     });
 
-
-    //////////////////// Clinic Ramet /////////////////////////////
-
-    socket.on('connect',function(){
-      io.emit('connect',{status: 1});
-   });
-
-   socket.on('seqemployeeramet', function(data) {
-        io.sockets.emit('seqemployeeramet', data);
-    });
-
-    socket.on('seqemployeedoctorramet', function(data, fn) {
-        io.sockets.emit('seqemployeedoctorramet', data);
-        fn(true);
-    });
-
-    socket.on('seqsuccessramet', function(data, fn) {
-        io.sockets.emit('seqsuccessramet', data);
-        fn(true);
-    });
-
-    socket.on('seqramet', function(data) {
-        io.sockets.emit('seqramet', data);
-        console.log(data);
-    });
-
-    socket.on('smartcard',(data) => {
-      //console.log(data.cid);
-      io.sockets.emit('checksmartcard',data);
-   });
-
-
 });
 
 /*

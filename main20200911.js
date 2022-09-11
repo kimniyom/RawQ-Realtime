@@ -1,13 +1,8 @@
-const express = require("express");
 const mysql = require('mysql');
 const MySQLEvents = require('./lib');
 
-const app = express();
+const app = require('express')();
 const http = require('http').createServer(app);
-
-const bodyParser = require("body-parser");
-//const gTTS = require('gtts');
-const fs = require("fs");
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -16,42 +11,9 @@ const io = require('socket.io')(http, {
     transports: ['websocket', 'polling'],
 });
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-//app.use('/audio', express.static(__dirname + '/sound'));
-
 app.get('/', (req, res) => {
     res.send('<h1>WelCome to api rawq</h1>');
 });
-
-/*
-app.post('/voice', (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = today.getFullYear();
-    let dateNow = yyyy + mm + dd;
-    var dir = 'sound/' + dateNow;
-
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir);
-    }
-
-    let speech = req.body.txt;
-    let vn = req.body.vn;
-    let gtts = new gTTS(speech, 'th');
-    gtts.save(dir + '/' + vn + '.mp3', function(err, result) {
-        if (err) { throw new Error(err); }
-        console.log("Text to speech converted!");
-        res.send("Unable to download the file")
-    });
-
-});
-*/
-
 
 io.on('connection', function(socket) {
     console.log("user connected");
@@ -76,16 +38,9 @@ io.on('connection', function(socket) {
         io.sockets.emit("monitor-drug", data);
     });
 
-    //แสดงคิวที่กำลังเรียก POPUP จอใหญ่ 
+    //อ่านชื่อคิวหน้าห้องยา
     socket.on('callquere-drug', function(data) {
         io.sockets.emit("callquere-drug", data);
-        console.log("ShowQ");
-    });
-
-    //อ่านชื่อคิวหน้าห้อง
-    socket.on('readqueue', function(data) {
-        io.sockets.emit("readqueue", data);
-        console.log("ReadQ");
     });
 
     //เช็คช่องสัญญาณว่าว่างไหม
@@ -95,6 +50,7 @@ io.on('connection', function(socket) {
 
     //ล้างค่าหน้าจอ
     socket.on('clear-monitor', function(data) {
+        //console.log(data);
         io.sockets.emit("clear-monitor", data);
     });
 
@@ -108,51 +64,14 @@ io.on('connection', function(socket) {
         io.sockets.emit("mobile-drug", data);
     });
 
-    //ส่งไปให้ App อ่านชื่อที่ Android
-    socket.on('sendmonitor', function(data) {
-        io.sockets.emit("sendmonitor", data);
-    });
-
     socket.on('disconnect', function() {
         console.log("user disconnect");
         //io.sockets.emit('end call');
     });
 
-
-    //////////////////// Clinic Ramet /////////////////////////////
-
-    socket.on('connect',function(){
-      io.emit('connect',{status: 1});
-   });
-
-   socket.on('seqemployeeramet', function(data) {
-        io.sockets.emit('seqemployeeramet', data);
-    });
-
-    socket.on('seqemployeedoctorramet', function(data, fn) {
-        io.sockets.emit('seqemployeedoctorramet', data);
-        fn(true);
-    });
-
-    socket.on('seqsuccessramet', function(data, fn) {
-        io.sockets.emit('seqsuccessramet', data);
-        fn(true);
-    });
-
-    socket.on('seqramet', function(data) {
-        io.sockets.emit('seqramet', data);
-        console.log(data);
-    });
-
-    socket.on('smartcard',(data) => {
-      //console.log(data.cid);
-      io.sockets.emit('checksmartcard',data);
-   });
-
-
 });
 
-/*
+
 const program = async() => {
     const connection = mysql.createConnection({
         host: process.env.DB_HOST,
@@ -169,7 +88,7 @@ const program = async() => {
     });
 
     await instance.start();
-
+    /*
     instance.addTrigger({
         name: 'checkqueue',
         expression: '*',
@@ -190,12 +109,13 @@ const program = async() => {
 
     instance.on(MySQLEvents.EVENTS.CONNECTION_ERROR, console.error);
     instance.on(MySQLEvents.EVENTS.ZONGJI_ERROR, console.error);
+    */
 };
 
 program()
     .then(() => console.log('Waiting for database events...'))
     .catch(console.error);
-*/
+
 http.listen(process.env.PORT, () => {
     console.log('listening on *:' + process.env.PORT);
 });
