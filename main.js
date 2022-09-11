@@ -57,10 +57,12 @@ io.on('connection', function(socket) {
     //###################### Service Mobile ###################//
     //ส่งคิวเรียกล่าสุด
     socket.on('call-lastq', function(data) { //=>data ส่งเป็น Json {'lastq': lastq,'qtype': qtype,'qdate': qdate}
+        console.log(data);
         io.sockets.emit("call-lastq", data);
     });
 
     socket.on('mobile-drug', function(data) {
+        console.log(data);
         io.sockets.emit("mobile-drug", data);
     });
 
@@ -69,9 +71,22 @@ io.on('connection', function(socket) {
         //io.sockets.emit('end call');
     });
 
+    //ส่วนของตู้ Kiosk เมื่อกดคิวส่งค่าไปยังจอตามรหัสแผนกที่ส่งมา
+    socket.on('monitor-counter', function(data) {
+        console.log(data);
+        io.sockets.emit("monitor-counter", data);
+    });
+
+    //ส่วนของตู้ Kiosk เมื่อกดคิวส่งค่าไปยังจอรอซักประวัติตามแผนกที่ส่งมา
+    socket.on('queue-counter', function(data) {
+        console.log(data);
+        io.sockets.emit("queue-counter", data);
+    });
+
 });
 
 
+/*
 const program = async() => {
     const connection = mysql.createConnection({
         host: process.env.DB_HOST,
@@ -93,9 +108,7 @@ const program = async() => {
         name: 'checkqueue',
         expression: '*',
         statement: MySQLEvents.STATEMENTS.INSERT,
-        onEvent: (event) => { // You will receive the events here
-            //console.log(event);
-            //console.log(event.affectedRows[0].after.department);
+        onEvent: (event) => {
             let department = event.affectedRows[0].after.department;
             let lastdepartment = event.affectedRows[0].after.lastdepartment;
             let hn = event.affectedRows[0].after.hn;
@@ -116,7 +129,7 @@ const program = async() => {
 program()
     .then(() => console.log('Waiting for database events...'))
     .catch(console.error);
-
+*/
 http.listen(process.env.PORT, () => {
     console.log('listening on *:' + process.env.PORT);
 });
