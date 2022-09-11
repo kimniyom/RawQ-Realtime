@@ -101,10 +101,12 @@ io.on('connection', function(socket) {
     //###################### Service Mobile ###################//
     //ส่งคิวเรียกล่าสุด
     socket.on('call-lastq', function(data) { //=>data ส่งเป็น Json {'lastq': lastq,'qtype': qtype,'qdate': qdate}
+        console.log(data);
         io.sockets.emit("call-lastq", data);
     });
 
     socket.on('mobile-drug', function(data) {
+        console.log(data);
         io.sockets.emit("mobile-drug", data);
     });
 
@@ -118,14 +120,26 @@ io.on('connection', function(socket) {
         //io.sockets.emit('end call');
     });
 
+    //ส่วนของตู้ Kiosk เมื่อกดคิวส่งค่าไปยังจอตามรหัสแผนกที่ส่งมา
+    socket.on('monitor-counter', function(data) {
+        console.log(data);
+        io.sockets.emit("monitor-counter", data);
+    });
+
+    //ส่วนของตู้ Kiosk เมื่อกดคิวส่งค่าไปยังจอรอซักประวัติตามแผนกที่ส่งมา
+    socket.on('queue-counter', function(data) {
+        console.log(data);
+        io.sockets.emit("queue-counter", data);
+    });
+
 
     //////////////////// Clinic Ramet /////////////////////////////
 
-    socket.on('connect',function(){
-      io.emit('connect',{status: 1});
-   });
+    socket.on('connect', function() {
+        io.emit('connect', { status: 1 });
+    });
 
-   socket.on('seqemployeeramet', function(data) {
+    socket.on('seqemployeeramet', function(data) {
         io.sockets.emit('seqemployeeramet', data);
     });
 
@@ -144,13 +158,14 @@ io.on('connection', function(socket) {
         console.log(data);
     });
 
-    socket.on('smartcard',(data) => {
-      //console.log(data.cid);
-      io.sockets.emit('checksmartcard',data);
-   });
+    socket.on('smartcard', (data) => {
+        //console.log(data.cid);
+        io.sockets.emit('checksmartcard', data);
+    });
 
 
 });
+
 
 /*
 const program = async() => {
