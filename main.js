@@ -152,7 +152,7 @@ io.on('connection', function (socket) {
     //ตรวจสอบว่ามีการอ่านคิวอยู่ไหม ส่งรหัสแผนก,เลขหน้าจอ
     socket.on('check-call-counter', function (data) {
         console.log(data);
-        io.sockets.emit("checkcall-read", data);
+        io.sockets.emit("check-call-counter", data);
     });
 
 
