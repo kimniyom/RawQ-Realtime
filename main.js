@@ -126,6 +126,13 @@ io.on('connection', function (socket) {
 
     //ส่วนของตู้ Kiosk เมื่อกดคิวส่งค่าไปยังจอตามรหัสแผนกที่ส่งมาและเลขหน้าจอให้อัพเดทข้อมูล
     socket.on('monitor-counter', function (data) {
+        /*Data
+        {
+            res: 1,
+            department: department,
+            monitornumber: monitorNumber
+        }
+        */
         console.log("Monitor Counter Queue => " + data);
         io.sockets.emit("monitor-counter", data);
     });
