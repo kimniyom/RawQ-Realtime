@@ -139,6 +139,14 @@ io.on('connection', function (socket) {
 
     //ส่วนของตู้ Kiosk เมื่อกดคิวส่งค่าไปยังจอรอซักประวัติตามแผนกที่ส่งมาให้อัพเดทข้อมูล
     socket.on('queue-counter', function (data) {
+        /*
+            queue: {
+                queue: qnumber, 
+                channel: channel
+            }, 
+            department: department,
+            monitornumber: monitorNumber
+        */
         console.log(data);
         io.sockets.emit("queue-counter", data);
     });
@@ -152,13 +160,22 @@ io.on('connection', function (socket) {
 
     //อ่านชื่อคิวหน้าห้อง
     socket.on('readqueue-counter', function (data) {
+        /*{
+            queue: qnumber,
+            channel: channel,
+            department: department,
+            monitornumber: monitorNumber,
+            fullname: fullname,
+            flag: 1
+        }
+        */
         io.sockets.emit("readqueue-counter", data);
         console.log("ReadQ Counter");
     });
 
     //ตรวจสอบว่ามีการอ่านคิวอยู่ไหม ส่งรหัสแผนก,เลขหน้าจอ
     socket.on('check-call-counter', function (data) {
-        console.log(data);
+        console.log("check-call-counter => " + data);
         io.sockets.emit("check-call-counter", data);
     });
 
