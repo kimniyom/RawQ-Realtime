@@ -180,6 +180,20 @@ io.on('connection', function (socket) {
     });
 
 
+    //เมื่อมีการส่งคิวไปที่ห้องตรวจสั่งให้อัพเดทข้อมูล
+    socket.on('queue-fix-room', function (data) {
+        /*
+        {
+            department: department,
+            channel: channel,
+            monitornumber: monitorNumber
+         }
+        */
+        console.log(data);
+        io.sockets.emit("queue-fix-room", data);
+    });
+
+
 
     //########################################################//
     //#################### Clinic Ramet ######################//
