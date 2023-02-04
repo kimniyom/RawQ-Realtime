@@ -1,6 +1,6 @@
 const express = require("express");
-const mysql = require('mysql');
-const MySQLEvents = require('./lib');
+//const mysql = require('mysql');
+//const MySQLEvents = require('./lib');
 
 const app = express();
 const http = require('http').createServer(app);
@@ -158,7 +158,7 @@ io.on('connection', function (socket) {
     });
 
 
-    //อ่านชื่อคิวหน้าห้อง
+    //รับค่ามาจากเครื่อง client เพื่อส่งไปอ่านกล่อง Android
     socket.on('readqueue-counter', function (data) {
         /*{
             queue: qnumber,
@@ -170,7 +170,7 @@ io.on('connection', function (socket) {
         }
         */
         io.sockets.emit("readqueue-counter", data);
-        console.log("ReadQ Counter");
+        console.log("Send Android ReadQ Counter");
     });
 
     //ตรวจสอบว่ามีการอ่านคิวอยู่ไหม ส่งรหัสแผนก,เลขหน้าจอ
