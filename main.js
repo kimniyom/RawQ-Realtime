@@ -53,48 +53,48 @@ app.post('/voice', (req, res) => {
 */
 
 
-io.on('connection', function (socket) {
+io.on('connection', function(socket) {
     console.log("user connected");
 
     //เมื่อนำเข้าคิวให้ชื่อในช่องรอเข้าคิวหาย
-    socket.on('reset-room', function (data) {
+    socket.on('reset-room', function(data) {
         io.sockets.emit("reset-room", data);
     });
 
     //เรียกคิวช่องทั่วไป
-    socket.on('queue-default', function (data) {
+    socket.on('queue-default', function(data) {
         io.sockets.emit("queue-default", data);
     });
 
     //เรียกคิวช่องเร่งด่วน
-    socket.on('queue-special', function (data) {
+    socket.on('queue-special', function(data) {
         io.sockets.emit("queue-special", data);
     });
 
     //อัพเดทหน้าจอคิวห้องยา
-    socket.on('monitor-drug', function (data) {
+    socket.on('monitor-drug', function(data) {
         io.sockets.emit("monitor-drug", data);
     });
 
     //แสดงคิวที่กำลังเรียก POPUP จอใหญ่ 
-    socket.on('callquere-drug', function (data) {
+    socket.on('callquere-drug', function(data) {
         io.sockets.emit("callquere-drug", data);
         console.log("ShowQ");
     });
 
     //อ่านชื่อคิวหน้าห้อง
-    socket.on('readqueue', function (data) {
+    socket.on('readqueue', function(data) {
         io.sockets.emit("readqueue", data);
         console.log("ReadQ");
     });
 
     //เช็คช่องสัญญาณว่าว่างไหม
-    socket.on('check-call', function (data) {
+    socket.on('check-call', function(data) {
         io.sockets.emit("check-call", data);
     });
 
     //ล้างค่าหน้าจอ
-    socket.on('clear-monitor', function (data) {
+    socket.on('clear-monitor', function(data) {
         io.sockets.emit("clear-monitor", data);
     });
 
@@ -102,20 +102,20 @@ io.on('connection', function (socket) {
     //###################### Service Mobile ###################//
     //#########################################################//
     //ส่งคิวเรียกล่าสุด
-    socket.on('call-lastq', function (data) { //=>data ส่งเป็น Json {'lastq': lastq,'qtype': qtype,'qdate': qdate}
+    socket.on('call-lastq', function(data) { //=>data ส่งเป็น Json {'lastq': lastq,'qtype': qtype,'qdate': qdate}
         io.sockets.emit("call-lastq", data);
     });
 
-    socket.on('mobile-drug', function (data) {
+    socket.on('mobile-drug', function(data) {
         io.sockets.emit("mobile-drug", data);
     });
 
     //ส่งไปให้ App อ่านชื่อที่ Android
-    socket.on('sendmonitor', function (data) {
+    socket.on('sendmonitor', function(data) {
         io.sockets.emit("sendmonitor", data);
     });
 
-    socket.on('disconnect', function () {
+    socket.on('disconnect', function() {
         console.log("user disconnect");
         //io.sockets.emit('end call');
     });
@@ -125,7 +125,7 @@ io.on('connection', function (socket) {
     //##########################################################//
 
     //ส่วนของตู้ Kiosk เมื่อกดคิวส่งค่าไปยังจอตามรหัสแผนกที่ส่งมาและเลขหน้าจอให้อัพเดทข้อมูล
-    socket.on('monitor-counter', function (data) {
+    socket.on('monitor-counter', function(data) {
         /*Data
         {
             res: 1,
@@ -138,7 +138,7 @@ io.on('connection', function (socket) {
     });
 
     //ส่วนของตู้ Kiosk เมื่อกดคิวส่งค่าไปยังจอรอซักประวัติตามแผนกที่ส่งมาให้อัพเดทข้อมูล
-    socket.on('queue-counter', function (data) {
+    socket.on('queue-counter', function(data) {
         /*
             queue: {
                 queue: qnumber, 
@@ -147,19 +147,19 @@ io.on('connection', function (socket) {
             department: department,
             monitornumber: monitorNumber
         */
-        console.log(data);
+        console.log("queue-counter => " + data);
         io.sockets.emit("queue-counter", data);
     });
 
     //แสดงคิวที่กำลังเรียก POPUP จอใหญ่ 
-    socket.on('callquere-counter', function (data) {
+    socket.on('callquere-counter', function(data) {
         io.sockets.emit("callquere-counter", data);
         console.log("ShowQ Counter");
     });
 
 
     //รับค่ามาจากเครื่อง client เพื่อส่งไปอ่านกล่อง Android
-    socket.on('readqueue-counter', function (data) {
+    socket.on('readqueue-counter', function(data) {
         /*{
             queue: qnumber,
             channel: channel,
@@ -174,14 +174,14 @@ io.on('connection', function (socket) {
     });
 
     //ตรวจสอบว่ามีการอ่านคิวอยู่ไหม ส่งรหัสแผนก,เลขหน้าจอ
-    socket.on('check-call-counter', function (data) {
+    socket.on('check-call-counter', function(data) {
         console.log("check-call-counter => " + data);
         io.sockets.emit("check-call-counter", data);
     });
 
 
     //เมื่อมีการส่งคิวไปที่ห้องตรวจสั่งให้อัพเดทข้อมูล
-    socket.on('queue-fix-room', function (data) {
+    socket.on('queue-fix-room', function(data) {
         /*
         {
             department: department,
@@ -199,25 +199,25 @@ io.on('connection', function (socket) {
     //#################### Clinic Ramet ######################//
     //########################################################//
 
-    socket.on('connect', function () {
+    socket.on('connect', function() {
         io.emit('connect', { status: 1 });
     });
 
-    socket.on('seqemployeeramet', function (data) {
+    socket.on('seqemployeeramet', function(data) {
         io.sockets.emit('seqemployeeramet', data);
     });
 
-    socket.on('seqemployeedoctorramet', function (data, fn) {
+    socket.on('seqemployeedoctorramet', function(data, fn) {
         io.sockets.emit('seqemployeedoctorramet', data);
         fn(true);
     });
 
-    socket.on('seqsuccessramet', function (data, fn) {
+    socket.on('seqsuccessramet', function(data, fn) {
         io.sockets.emit('seqsuccessramet', data);
         fn(true);
     });
 
-    socket.on('seqramet', function (data) {
+    socket.on('seqramet', function(data) {
         io.sockets.emit('seqramet', data);
         console.log(data);
     });
