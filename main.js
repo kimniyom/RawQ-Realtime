@@ -159,7 +159,7 @@ io.on('connection', function(socket) {
 
 
     //รับค่ามาจากเครื่อง client เพื่อส่งไปอ่านกล่อง Android
-    socket.on('readqueue-counter', function(data) {
+    socket.on('readqueue-counter-android', function(data) {
         /*{
             queue: qnumber,
             channel: channel,
