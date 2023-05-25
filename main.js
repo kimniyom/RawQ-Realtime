@@ -158,7 +158,7 @@ io.on('connection', function(socket) {
     });
 
 
-    //รับค่ามาจากเครื่อง client เพื่อส่งไปอ่านกล่อง Android
+    //รับค่ามาจากเครื่อง client เพื่อส่งไปอ่านกล่อง Android //จุดซักประวัติ,หน้าห้องตรวจ โดยเช็คตามจอ
     socket.on('readqueue-counter-android', function(data) {
         /*{
             queue: qnumber,
@@ -169,8 +169,8 @@ io.on('connection', function(socket) {
             flag: 1
         }
         */
-        io.sockets.emit("readqueue-counter", data);
-        console.log("Send Android ReadQ Counter");
+        io.sockets.emit("readqueue-counter", data);//ส่งไปอ่านคิวที่ App Android
+        console.log("Send Android ReadQ Counter" + " Dep => " + data.department + " Monitor => " + data.monitornumber);
     });
 
     //ตรวจสอบว่ามีการอ่านคิวอยู่ไหม ส่งรหัสแผนก,เลขหน้าจอ
