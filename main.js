@@ -194,6 +194,19 @@ io.on('connection', function(socket) {
     });
 
 
+    //ดึง Config หน้าจอใหม่
+     socket.on('config-monitor', function(data) {
+        /*
+        {
+            department: department,
+            channel: channel,
+            monitornumber: monitorNumber
+         }
+        */
+        console.log(data);
+        io.sockets.emit("set-monitor", data);
+    });
+    
 
     //########################################################//
     //#################### Clinic Ramet ######################//
