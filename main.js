@@ -206,6 +206,31 @@ io.on('connection', function(socket) {
         console.log(data);
         io.sockets.emit("set-monitor", data);
     });
+
+    //ส่งแสดง popup จอ TV
+    socket.on('show-popup-queue', function(data) {
+        /*
+        {
+            department: this.departmentLocal,
+            monitornumber: this.monitornumber,
+            queue: queue,
+            channel: channel
+         }
+        */
+        console.log("Show POP UP");
+        io.sockets.emit("show-popup-queue-tv", data);
+    });
+
+    //ส่งปิด popup จอ TV
+    socket.on('exit-popup-queue', function(data) {
+        /*
+        {
+            department: this.departmentLocal,
+            monitornumber: this.monitornumber
+         }
+        */
+        io.sockets.emit("exit-popup-queue-tv", data);
+    });
     
 
     //########################################################//
