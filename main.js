@@ -83,8 +83,8 @@ io.on('connection', function(socket) {
     });
 
     socket.on('callquere-drug-android', function(data) {
-        io.sockets.emit("ccallquere-drug-flow1", data);
-        console.log("ShowQ");
+        io.sockets.emit("callquere-drug", data);
+        console.log("ShowQ ReadQ => To Monitor And Read");
     });
 
     //อ่านชื่อคิวหน้าห้อง
