@@ -1,5 +1,8 @@
-# RawQ-Realtime
+#RawQ-Realtime
 ดึงข้อมูลเมื่อมีการบันทึกลงฐานข้อมูล
+<br/>
+Node Version >=16.0.x<br/>
+Socket io Version >=2.0.x <=3.0
 <br/><br/>
 สร้างไฟล .env<br/>
 DB_HOST=######<br/>

@@ -1,12 +1,8 @@
 const express = require("express");
-//const mysql = require('mysql');
-//const MySQLEvents = require('./lib');
-
 const app = express();
 const http = require('http').createServer(app);
 
 const bodyParser = require("body-parser");
-//const gTTS = require('gtts');
 const fs = require("fs");
 
 const dotenv = require('dotenv');
@@ -19,39 +15,10 @@ const io = require('socket.io')(http, {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//app.use('/audio', express.static(__dirname + '/sound'));
 
 app.get('/', (req, res) => {
     res.send('<h1>WelCome to api rawq</h1>');
 });
-
-/*
-app.post('/voice', (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = today.getFullYear();
-    let dateNow = yyyy + mm + dd;
-    var dir = 'sound/' + dateNow;
-
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir);
-    }
-
-    let speech = req.body.txt;
-    let vn = req.body.vn;
-    let gtts = new gTTS(speech, 'th');
-    gtts.save(dir + '/' + vn + '.mp3', function(err, result) {
-        if (err) { throw new Error(err); }
-        console.log("Text to speech converted!");
-        res.send("Unable to download the file")
-    });
-
-});
-*/
-
 
 io.on('connection', function(socket) {
     console.log("user connected");
@@ -83,8 +50,9 @@ io.on('connection', function(socket) {
     });
 
     socket.on('callquere-drug-android', function(data) {
+        let dataSend = JSON.stringify(data);
         io.sockets.emit("callquere-drug", data);
-        console.log("ShowQ ReadQ => To Monitor And Read");
+        console.log("ShowQ ReadQ => To Monitor And Read" + dataSend);
     });
 
     //อ่านชื่อคิวหน้าห้อง
@@ -107,7 +75,8 @@ io.on('connection', function(socket) {
     //###################### Service Mobile ###################//
     //#########################################################//
     //ส่งคิวเรียกล่าสุด
-    socket.on('call-lastq', function(data) { //=>data ส่งเป็น Json {'lastq': lastq,'qtype': qtype,'qdate': qdate}
+    socket.on('call-lastq', function(data) { 
+        //=>data ส่งเป็น Json {'lastq': lastq,'qtype': qtype,'qdate': qdate}
         io.sockets.emit("call-lastq", data);
     });
 
@@ -275,51 +244,6 @@ io.on('connection', function(socket) {
 
 });
 
-
-/*
-const program = async() => {
-    const connection = mysql.createConnection({
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        port: process.env.DB_PORT
-    });
-
-    const instance = new MySQLEvents(connection, {
-        startAtEnd: true,
-        excludedSchemas: {
-            mysql: true,
-        },
-    });
-
-    await instance.start();
-
-    instance.addTrigger({
-        name: 'checkqueue',
-        expression: '*',
-        statement: MySQLEvents.STATEMENTS.INSERT,
-        onEvent: (event) => {
-            let department = event.affectedRows[0].after.department;
-            let lastdepartment = event.affectedRows[0].after.lastdepartment;
-            let hn = event.affectedRows[0].after.hn;
-
-            if (event.type == "INSERT" || event.type == "insert" || event.type == 1 || event.type == "1") {
-                if (event.schema == "queuedb" && event.table == "event_queue") {
-                    io.emit('new-queue', { res: 1, department: department, lastdepartment: lastdepartment });
-                    console.log("HN => " + hn + " to room => " + department);
-                }
-            }
-        },
-    });
-
-    instance.on(MySQLEvents.EVENTS.CONNECTION_ERROR, console.error);
-    instance.on(MySQLEvents.EVENTS.ZONGJI_ERROR, console.error);
-};
-
-program()
-    .then(() => console.log('Waiting for database events...'))
-    .catch(console.error);
-*/
 http.listen(process.env.PORT, () => {
     console.log('listening on *:' + process.env.PORT);
 });
